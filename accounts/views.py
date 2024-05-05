@@ -1,0 +1,190 @@
+from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth.models import User
+from django.conf import settings
+from django.core.mail import send_mail
+import random
+import string
+import re
+from django.http import HttpResponse
+from accounts.forms import ProfileForm
+from accounts.models import profile
+
+# Create your views here.
+
+def login_view(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    if request.method == 'POST':
+        username = request.POST.get("user")
+        password = request.POST.get("password")
+        user = None
+        regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
+        if re.fullmatch(regex, username):
+            user = User.objects.filter(email=username).first()
+            if user:
+                username = user.username
+        user = authenticate(request, username=username, password=password)
+        if user:
+            login(request, user)
+            messages.add_message(request, messages.SUCCESS, f"{user.first_name} با موفقیت وارد شدید")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        else:
+            messages.add_message(request, messages.WARNING, "کاربری با این مشخصات وجود ندارد")
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+    return render(request, 'accounts/login.html')
+
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+
+def signup_view(request):
+    if request.user.is_authenticated:
+        return redirect('/')
+    if request.method == 'POST':
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        password2 = request.POST.get("password2")
+        if User.objects.filter(username=username).exists():
+            messages.add_message(request, messages.WARNING, "لطفا نام کاربری دیگری را انتخاب کنید")
+        elif User.objects.filter(email=email).exists():
+            messages.add_message(request, messages.WARNING, "از این ایمیل قبلا استفاده شده است")
+        elif password != password2:
+            messages.add_message(request, messages.WARNING, "کلمه های عبور با یکدیگر مطابقت ندارد")
+        else:
+            user = User.objects.create_user(
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                username=username,
+                password=password
+            )
+            login(request, user)
+            print(User.objects.all())
+            messages.add_message(request, messages.SUCCESS, f"{first_name} حساب کاربری شما با موفقیت ایجاد شد")
+            # subject = 'به وب مارکت خوش آمدید'
+            # message = f'سلام {first_name}. ثبت نام شما در وب مارکت با موفقیت انجام شد'
+            # email_from = settings.EMAIL_HOST_USER
+            # recipient_list = [user.email]
+            # send_mail(subject, message, email_from, recipient_list)
+            return redirect('/')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+    return render(request, 'accounts/signup.html')
+
+# def reset_view(request):
+#     if not request.user.is_authenticated:
+#         if request.method == 'POST':
+#             address = request.POST["address"]
+#             pattern = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+#             t = re.match(pattern, address)
+#             try:
+#                 s = None
+#                 s = User.objects.get(email=address)
+#             except:
+#                 pass
+#             if t != None and s != None:
+#                 characters = string.digits
+#                 code = ''.join(random.choice(characters) for i in range(8))
+#                 subject = 'کد بازیابی webmarket'
+#                 message = code
+#                 email_from = settings.EMAIL_HOST_USER
+#                 recipient_list = [address, ]
+#                 send_mail( subject, message, email_from, recipient_list )
+#                 request.session['email'] = address
+#                 request.session['reset_code'] = code
+#                 return redirect('/accounts/change')
+#             else:
+#                 try:
+#                     address = User.objects.filter(username=address).first().email
+#                     characters = string.digits
+#                     code = ''.join(random.choice(characters) for i in range(8))
+#                     subject = 'کد بازیابی webmarket'
+#                     message = code
+#                     email_from = settings.EMAIL_HOST_USER
+#                     recipient_list = [address, ]
+#                     send_mail( subject, message, email_from, recipient_list )
+#                     request.session['email'] = address
+#                     request.session['reset_code'] = code
+#                     return redirect('/accounts/change')
+#                 except:
+#                     return HttpResponse('کاربری با این مشخصات وجود ندارد')
+#     return render(request, 'reset.html')
+
+# def change_view(request):
+#     code = None
+#     if request.method == 'POST':
+#         code = request.POST['code']
+#         password1 = request.POST['password']
+#         password2 = request.POST['password2']
+#         if request.session.get('reset_code') == code:
+#             if password1 == password2:
+#                 user_email = request.session.get('email')
+#                 user = User.objects.get(email=user_email)
+#                 user.set_password(password2)
+#                 user.save()
+#                 messages.add_message(request, messages.SUCCESS,"تغییر کلمه ی عبور شما با موفقیت انجام شد")
+#                 login(request, user)
+#                 return redirect('/')
+#             else:
+#                 messages.add_message(request, messages.WARNING,"کلمه های عبور شما مطابقت ندارد")
+#         else:
+#             messages.add_message(request, messages.WARNING,"کد بازیابی اشتباه است")
+#     return render(request, 'change.html')
+
+# def profile_view(request):
+#     try:
+#         user = profile.objects.get(user=request.user)
+#         if request.method == 'POST':
+#             form = ProfileForm(request.POST, request.FILES)
+#             if form.is_valid():
+#                 image =  form.cleaned_data["image"]            
+#                 user.image = image
+#                 x = user.image
+#                 user.save()
+#                 return redirect('/')
+#         else:
+#             form = ProfileForm()
+#         x = user.image
+#         user = User.objects.get_or_create(username=request.user)
+#     except:
+#         user = profile.objects.create(user=request.user)
+#         if request.method == 'POST':
+#             form = ProfileForm(request.POST, request.FILES)
+#             if form.is_valid():
+#                 image =  form.cleaned_data["image"]            
+#                 user.image = image
+#                 x = user.image
+#                 user.save()
+#                 return redirect('/')
+#         else:
+#             form = ProfileForm()
+#         x = user.image
+#         print(x)
+#     user = User.objects.get(username=request.user)
+#     return render(request, 'profile/profile.html', {'user': user, 'form': form, 'image': x})
+
+# def change_2(request):
+#     if request.method == 'POST':
+#         password1 = request.POST['password']
+#         password2 = request.POST['password2']
+#         if password1 == password2:
+#             user_email = request.user.email
+#             user = User.objects.get(email=user_email)
+#             user.set_password(password2)
+#             user.save()
+#             messages.add_message(request, messages.SUCCESS,"تغییر کلمه ی عبور شما با موفقیت انجام شد")
+#             return redirect('/')
+#         else:
+#             messages.add_message(request, messages.WARNING,"کلمه های عبور شما مطابقت ندارد")
+
+#     return render(request, 'change2.html')

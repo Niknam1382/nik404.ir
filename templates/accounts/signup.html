@@ -1,0 +1,116 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>فرم ورود</title>
+
+    <!-- styles  -->
+    <link rel="stylesheet" href="{% static 'accounts/cssanimate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/bootstrap4-rtl.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/material-design-iconic-font.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/style.css' %}" />
+    <!--/ styles  -->
+
+</head>
+
+<body class="rtl">
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                        {{ message }}
+                        </li>
+                        {% endfor %}
+                </ul>
+                {% endif %}
+
+                <!-- form -->
+                <form class="login100-form validate-form" method="post" action="{% url 'accounts:signup' %}">
+                    {% csrf_token %}
+                    <!-- logo of form -->
+                    <span class="login100-form-title p-b-48">
+                        <img class="logo" src="{% static 'accounts/img/logo.png' %}" width="200px">
+                    </span>
+                    <!-- / logo of form -->
+
+                    <span class="login100-form-title p-b-26 text-secondary">ورود به ناحیه کاربری</span>
+
+
+                    <div class="wrap-input100">
+                        <input class="input100" type="text" name="first_name">
+                        <span class="focus-input100" data-placeholder="نام"></span>
+                    </div>
+                    <div class="wrap-input100">
+                        <input class="input100" type="text" name="last_name">
+                        <span class="focus-input100" data-placeholder="نام خانوادگی"></span>
+                    </div>
+                    <div class="wrap-input100">
+                        <input class="input100" type="text" name="username">
+                        <span class="focus-input100" data-placeholder="نام کاربری"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="فرمت ایمیل وارد شده صحیح نمی باشد!">
+                        <input class="input100" type="text" name="user">
+                        <span class="focus-input100" data-placeholder="پست الکترونیک"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="لطفا رمز عبور خود را وارد کنید!">
+                        <span class="btn-show-pass">
+                            <i class="zmdi zmdi-eye"></i>
+                        </span>
+                        <input class="input100" type="password" name="password">
+                        <span class="focus-input100" data-placeholder="رمز عبور"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input" data-validate="لطفا رمز عبور خود را دوباره وارد کنید!">
+                        <span class="btn-show-pass">
+                            <i class="zmdi zmdi-eye"></i>
+                        </span>
+                        <input class="input100" type="password" name="password2">
+                        <span class="focus-input100" data-placeholder="تایید رمز عبور"></span>
+                    </div>
+
+                    <!-- login button -->
+                    <div class="container-login100-form-btn">
+                        <div class="wrap-login100-form-btn">
+                            <div class="login100-form-bgbtn"></div>
+                            <button class="login100-form-btn" type="submit">ورود</button>
+                        </div>
+                    </div>
+                    <!-- / login button -->
+
+                    <!-- register-->
+                    <div class="text-center p-t-115">
+                        <span class="txt1">
+                            هنوز ثبت نام نکرده اید؟!
+                        </span>
+                        <a class="txt2 text-danger" href="#">ثبت نام کنید</a>
+                    </div>
+                    <!-- / register-->
+
+                </form>
+                <!-- / form -->
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{% static 'accounts/js/jquery-3.1.1.min.js' %}"></script>
+    <script src="{% static 'accounts/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'accounts/js/scripts.js' %}"></script>
+    <!-- / Scripts -->
+
+</body><!-- This template has been downloaded from Webrubik.com -->
+
+</html>
