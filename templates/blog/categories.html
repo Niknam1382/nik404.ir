@@ -1,0 +1,9 @@
+<div class="item sub-bg mb-30">
+    <h5 class="title">دسته بندی</h5>
+    <ul class="category">
+        {% for name,count in categories.items %}
+        <li><a href="{% url 'blog:category' cat=name %}">{{name}}</a><a href="{% url 'blog:category' cat=name %}"><span>({{count}})</span></a></li>
+        {% endfor %}
+    </ul>
+
+</div>
