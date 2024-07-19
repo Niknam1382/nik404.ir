@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'website',
     'blog',
+    'django.contrib.humanize',
+    'taggit',
+    'django_summernote',
 ]
 
 MIDDLEWARE = [
@@ -127,5 +131,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_ROOT = BASE_DIR / 'statics'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/'media'
-import os
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+SUMMERNOTE_THEME = 'bs4'

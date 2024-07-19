@@ -19,3 +19,13 @@ def recent():
     now = timezone.now()
     posts = Post.objects.filter(status=True).order_by('-published_date').exclude(published_date__gt=now)[:3]
     return {'posts': posts}
+
+@register.inclusion_tag('blog/tags.html')
+def tags():
+    now = timezone.now()
+    posts = Post.objects.filter(status=True).order_by('-published_date').exclude(published_date__gt=now)
+    tags = []
+    for post in posts:
+        tags.extend(post.tags.all())
+    unique_tags = list(set(tags))
+    return {'tags': unique_tags}

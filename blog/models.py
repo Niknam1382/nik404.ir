@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from jdatetime import date
 from jdatetime import datetime as jdatetime
+from django.core.validators import MinValueValidator, MaxValueValidator
+from taggit.managers import TaggableManager
 
 persian_month_names = {
     1: 'فروردین',
@@ -34,9 +36,9 @@ class Post(models.Model):
     status = models.BooleanField(default=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ManyToManyField(Category)
-    '''
-    tag
-    '''
+    tags = TaggableManager()
+    comment_counter = models.IntegerField(default=0)
+    
     def __str__(self):
         return '{} - {}'.format(self.id, self.title)
     
@@ -48,10 +50,14 @@ class Post(models.Model):
         return persian_month_names[month_number]
     
     class Meta:
-        ordering = ["created_date"]
+        ordering = ["-created_date"]
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, blank=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     email = models.EmailField()
     message = models.TextField()
+    approved = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    published_at = models.DateTimeField(auto_now=True)
+    stars = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)])

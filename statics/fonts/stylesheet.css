@@ -1,0 +1,50 @@
+@font-face {
+    font-family: 'yekan';
+    src: url('YekanBakhFaNum-Medium.eot');
+    src: url('YekanBakhFaNum-Medium.eot?#iefix') format('embedded-opentype'),
+        url('YekanBakhFaNum-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'yekan';
+    src: url('YekanBakhFaNum-Heavy.eot');
+    src: url('YekanBakhFaNum-Heavy.eot?#iefix') format('embedded-opentype'),
+        url('YekanBakhFaNum-Heavy.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'yekan';
+    src: url('YekanBakhFaNum-Regular.eot');
+    src: url('YekanBakhFaNum-Regular.eot?#iefix') format('embedded-opentype'),
+        url('YekanBakhFaNum-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'yekan';
+    src: url('YekanBakhFaNum-Light.eot');
+    src: url('YekanBakhFaNum-Light.eot?#iefix') format('embedded-opentype'),
+        url('YekanBakhFaNum-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'yekan';
+    src: url('YekanBakhFaNum-Bold.eot');
+    src: url('YekanBakhFaNum-Bold.eot?#iefix') format('embedded-opentype'),
+        url('YekanBakhFaNum-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+

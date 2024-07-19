@@ -100,8 +100,13 @@
                                             </clipPath>
                                         </defs>
                                     </svg>
-                                    <a href="#0">تکنولوژی</a>
+
+                                    {% for tag in post.tags.all %}
+                                    <a href="{% url 'blog:tag' tag_name=tag %}">{{tag}}</a>
+                                    {% endfor %}
+                                    
                                 </li>
+                                
                                 <li>
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
@@ -125,12 +130,16 @@
                                             </clipPath>
                                         </defs>
                                     </svg>
-                                    <a href="#0">0 نظر</a>
+                                    <p>{{post.comment_counter}} نظر</p>
                                 </li>
+                                <p>تعداد بازدید : {{post.counted_views}}</p>
                             </ul>
                             <h3><a href="{% url 'blog:single' pid=post.id %}" class="primary-hover">{{post.title}}</a>
                             </h3>
-                            <p class="mt-10">{{post.content|truncatechars:300}}</p>
+                            <p class="mt-10">{{ post.content|truncatewords:30|safe }}</p>
+                            <!-- <p class="mt-10">{{ post.content|truncatechars:300 }}</p>
+                            <p class="mt-10">{{ post.content|safe }}</p>
+                            <p class="mt-10">{{ post.content|safe|truncatechars:300 }}</p> -->
                             <div class="about__info justify-content-between flex-wrap gap-3 mt-25">
                                 <div class="d-flex gap-2 align-items-center">
                                     <img src="{% static 'images/blog/admin1.png' %}" alt="image">
@@ -156,9 +165,9 @@
                         {% endif %}
                         {% for i in posts.paginator.page_range %}
                         {% if posts.number == i %}
-                        <a href="page={{i}}" class="active">{{i}}</a>
+                        <a href="?page={{i}}" class="active">{{i}}</a>
                         {% else %}
-                        <a href="page={{i}}">{{i}}</a>
+                        <a href="?page={{i}}">{{i}}</a>
                         {% endif %}
                         {% endfor %}
                         {% if posts.has_next %}
@@ -184,20 +193,8 @@
 
                         {% recent %}
 
-                        <div class="item sub-bg">
-                            <h5 class="title">برچسب ها</h5>
-                            <div class="tags">
-                                <a href="#0">کسب و کار</a>
-                                <a href="#0">بازاریابی</a>
-                                <a href="#0">راه حل</a>
-                                <a href="#0">اس ام ام</a>
-                                <a href="#0">استارتاپ</a>
-                                <a href="#0">استراتژی</a>
-                                <a href="#0"> سئو</a>
-                                <a href="#0">خدمات</a>
-                                <a href="#0">بالا</a>
-                            </div>
-                        </div>
+                        {% tags %}
+
                     </div>
                 </div>
             </div>
