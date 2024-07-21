@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SignUp Form</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-image: url("{% static 'images/a.png' %}"); /* تصویر GIF پس‌زمینه */
+        background-size: cover;
+    }
+
+    form {
+        width: 270px;
+        padding: 30px;
+        border: 3px solid #ccc;
+        border-radius: 15px;
+        direction: rtl;
+    }
+
+    input,
+    button {
+        display: block;
+        width: 100%;
+        margin-bottom: 15px;
+        padding: 6px;
+        font-size: 16px;
+    }
+
+    button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+
+
+<form>
+    <input type="text" placeholder="نام" required="" aria-required="true">
+    <input type="text" placeholder="نام خانوادگی" required="" aria-required="true">
+    <input type="email" placeholder="ایمیل" required="" aria-required="true">
+    <input type="tel" placeholder="شماره تلفن" required="" aria-required="true" style="direction: rtl;">
+    <input type="text" placeholder="نام کاربری" required="" aria-required="true">
+    <input type="password" placeholder="رمز عبور" required="" aria-required="true">
+    <button type="submit">ثبت نام</button>
+</form>
+</html>
