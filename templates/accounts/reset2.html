@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بازیابی رمز عبور</title>
+    <style>
+        body {
+            background-color: #f9f5e8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 40px;
+            padding-left: 20px;
+            border-radius: 10px;
+            box-shadow: 25px 15px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-container h2 {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            direction: rtl;
+        }
+
+        .form-container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .form-container input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags %}
+    <script>alert("{{ message }}")</script> {% endif %}
+
+    {% endfor %}
+
+    {% endif %}
+    <div class="form-container">
+        <h2>کد تایید ارسال شده از طریق ایمیل را وارد کنید.</h2><br>
+        <form action="{% url 'accounts:reset2' %}" method="post">
+            {% csrf_token %}
+            <input type="number" name="confirm" placeholder="کد تایید" required
+                style="padding: 10px; margin: 5px; margin-left: auto; margin-right: auto; display: block; direction: rtl;"><br>
+            <input type="password" name="pass1" placeholder="رمز جدید" required
+                style="padding: 10px; margin: 5px; margin-left: auto; margin-right: auto; display: block; direction: rtl;" minlength="8"><br>
+            <input type="password" name="pass2" placeholder="تایید رمز جدید" required
+                style="padding: 10px; margin: 5px; margin-left: auto; margin-right: auto; display: block; direction: rtl;" minlength="8"><br>
+            <input type="submit" value="ارسال" style="margin-left: auto; margin-right: auto; display: block;">
+        </form>
+    </div>
+</body>
+
+</html>

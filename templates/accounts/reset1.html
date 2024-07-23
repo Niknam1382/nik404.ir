@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بازیابی رمز عبور</title>
+    <style>
+        body {
+            background-color: #f9f5e8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 40px;
+            padding-left: 20px;
+            border-radius: 10px;
+            box-shadow: 25px 15px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-container h2 {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            direction: rtl;
+        }
+
+        .form-container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .form-container input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags %}
+    <script>alert("{{ message }}")</script> {% endif %}
+
+    {% endfor %}
+
+    {% endif %}
+    <div class="form-container">
+        <h2>جهت بازیابی رمز عبور، ایمیل یا نام کاربری خود را وارد کنید</h2>
+        <form action="{% url 'accounts:reset1' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="usermail" placeholder="ایمیل یا نام کاربری" required>
+            <input type="submit" value="ارسال">
+        </form>
+    </div>
+</body>
+
+</html>

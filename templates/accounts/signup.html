@@ -1,0 +1,284 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SignUp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css'>
+    <link href="https://fonts.googleapis.com/css?family=Markazi+Text" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <style>
+        /*www.almasweb.org*/
+        * {
+            font-family: 'Markazi Text', serif !important;
+            direction: rtl;
+        }
+
+        html {
+            min-height: 100vh;
+        }
+
+        body {
+            background-image: url("{% static 'images/c.jpg' %}");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            font-size: 16px;
+            max-width: 1024px;
+            margin: 0 auto;
+            min-width: 280px;
+            padding-top: 0px;
+            padding-bottom: 0px ;
+        }
+
+        .card,
+        .card-content,
+        .card-action {
+            background-color: rgba(255, 255, 255, 0.03);
+            margin: 0;
+        }
+
+        .login-link span,
+        .signup-link span {
+            padding-bottom: .25rem;
+            cursor: pointer;
+        }
+
+        .login-link span:hover,
+        .signup-link span:hover {
+            border-bottom: 2px solid black;
+        }
+
+        .login-link.active span,
+        .signup-link.active span {
+            border-bottom: 2px solid black;
+        }
+
+        .password-form {
+            margin-bottom: -1rem;
+        }
+
+        .input-field input[type=email],
+        .input-field input[type=password],
+        .input-field input[type=text],
+        .input-field input[type=number] {
+            font-size: 16px;
+            margin-bottom: -1.5rem;
+        }
+
+        .input-field input[type=email],
+        .input-field input[type=password],
+        .input-field input[type=text],
+        .input-field input[type=number] {
+            color: black;
+        }
+
+        .input-field input[type=email]:focus,
+        .input-field input[type=password]:focus,
+        .input-field input[type=text]:focus,
+        .input-field input[type=number]:focus {
+            border-bottom: 1px solid black;
+            box-shadow: 0 1px 0 0 black;
+        }
+
+
+
+        #password-strength {
+            position: absolute;
+            top: 4px;
+            left: 16px;
+            font-size: 22px;
+        }
+
+        .help-text {
+            font-size: 13px;
+            text-align: right;
+        }
+
+        .card-action span:hover {
+            text-decoration: underline;
+        }
+
+        .forgot-password-row {
+            display: none;
+        }
+
+        .input-field.col label {
+            right: 0.75rem;
+        }
+
+        label {
+            font-size: 21px;
+        }
+
+        .amber-text.text-darken-4 {
+            color: black !important;
+        }
+
+        .amber-text.text-darken-4:hover {
+            text-decoration: none;
+            color: black !important;
+        }
+
+        /*www.almasweb.org*/
+    </style>
+</head>
+
+<body>
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags %}
+    <script>alert("{{ message }}")</script> {% endif %}
+
+    {% endfor %}
+
+    {% endif %}
+    <!--www.almasweb.org-->
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m6 offset-m3">
+                <div class="card hoverable">
+                    <div class="card-content grey-text text-lighten-1">
+                        <div class="row card-title">
+                            <div class="col s6 left-align"><a href="{% url 'accounts:login' %}"
+                                    style='color: black;'>ورود</a></div>
+                            <div class="col s6 right-align signup-link active"><span style='color: black;'>عضو
+                                    شوید</span></div>
+                        </div>
+                        <!-- <div class="row">
+                            <div class="input-field email-field col s12">
+                                <input id="email" type="email" class="validate white-text">
+                                <label for="email" class=" text-lighten-1" style='color: black;'>ایمیل</label>
+                            </div>
+                        </div> -->
+                        <div class="row">
+                            <form action="{% url 'accounts:signup' %}" method="post" class="col s12 password-form"
+                                autocomplete="nope">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="input-field email-field col s12">
+                                        <input id="email" type="text" name="first_name" class="validate">
+                                        <label for="email" class=" text-lighten-1" style='color: black;'
+                                            aria-required="true">نام</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field email-field col s12">
+                                        <input id="email" type="text" name="last_name" class="validate">
+                                        <label for="email" class=" text-lighten-1" style='color: black;'
+                                            aria-required="true">نام خانوادگی</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field email-field col s12">
+                                        <input id="email" type="number" name="phone" class="validate">
+                                        <label for="email" class=" text-lighten-1" style='color: black;'
+                                            aria-required="true">شماره تلفن</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field email-field col s12">
+                                        <input id="email" type="email" name="email" class="validate">
+                                        <label for="email" class=" text-lighten-1" style='color: black;'
+                                            aria-required="true">ایمیل</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field email-field col s12">
+                                        <input id="email" type="text" name="username" class="validate">
+                                        <label for="email" class=" text-lighten-1" style='color: black;'
+                                            aria-required="true">نام کاربری</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field password-field col s12">
+                                        <input id="password" type="password" name="password1" class="validate">
+                                        <!-- <span id="password-strength" style="padding-left: 25px;"></span> -->
+                                        <label for="password" style='color: black;' aria-required="true">پسورد</label>
+                                        <!-- <p class="help-text"></p> -->
+                                        <!-- <p style="color: rgba(0, 0, 0, 0);">-</p> -->
+                                    </div>
+                                    <!-- <p class="help-text" style="padding-right: 13px; color: rgb(100, 100, 0);"></p> -->
+                                </div>
+                                <div class="row confirm-password-row">
+                                    <div class="input-field confirm-password-field col s12">
+                                        <input id="confirm-password" type="password" name="password2" class="validate">
+                                        <label for="confirm-password" style='color: black;' aria-required="true">تایید
+                                            پسورد</label>
+                                    </div>
+                                </div>
+
+                                <div class="card-action center-align">
+                                    <div class="row">
+                                        <button type="submit"
+                                            class="btn-login btn amber darken-4 waves-effect white-text"
+                                            style='color: black;'>عضویت</button>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js'></script>
+    <!-- <script  src="js/index.js"></script> -->
+    <!--www.almasweb.org-->
+    <script>
+        /*www.almasweb.org*/
+
+        function showLogin() {
+            $(".login-link").addClass("active");
+            $(".signup-link").removeClass("active");
+            $(".btn-login").text("ورود");
+            $(".confirm-password-row").hide()
+            $(".forgot-password-row").show();
+        }
+
+        function showSignup() {
+            $(".login-link").removeClass("active");
+            $(".signup-link").addClass("active");
+            $(".btn-login").text("عضویت");
+            $(".confirm-password-row").show()
+            $(".forgot-password-row").hide();
+        }
+
+        function checkPasswordStrength() {
+            if (!$("#password").val() || $(".login-link").hasClass("active")) return;
+
+            const emoji = {
+                0: "\u{1F628}", // Fearful 
+                1: "\u{1F616}", // Confounded 
+                2: "\u{1F61E}", // Disappointed 
+                3: "\u{1F615}", // Confused 
+                4: "\u{1F603}" // Grinning 
+            };
+            const result = zxcvbn($("#password").val());
+            const warning = result.feedback.warning || "";
+            const suggestion = result.feedback.suggestions.join(", ").replace(/,/g, "") || "";
+
+            $("#password-strength").html(emoji[result.score]);
+            $(".help-text").text(`سعی کنید پسوردتان بهتر شود !`);
+        }
+
+        function init() {
+            $(".login-link").on("click", showLogin);
+            $(".signup-link").on("click", showSignup);
+            $("#password")
+                .on("input focus", checkPasswordStrength)
+                .on("blur", () => $("#password-strength, .help-text").empty());
+        }
+
+        $(init);
+        /*www.almasweb.org*/
+
+    </script>
+</body>
+
+</html>
