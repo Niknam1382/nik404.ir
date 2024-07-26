@@ -1,0 +1,55 @@
+{% load static %}
+{% load humanize %}
+
+{% for reply in replies %}
+<div class="blog-single__comment d-flex gap-4 mt-60 pb-60 bor-bottom ml-4">
+    <div class="image">
+        <img src="{% static 'images/blog/comment-image1.png' %}" alt="image">
+    </div>
+    <div class="content">
+        <div class="head d-flex flex-wrap gap-2 align-items-center justify-content-between">
+            <div class="con">
+                <h5><a href="#0" class="primary-hover">{{ reply.name }}</a></h5>
+                <span>{{ reply.published_at|naturaltime }}</span>
+
+                {% if reply.stars == 1 %}
+                <div class="star">
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                {% elif reply.stars == 2 %}
+                <div class="star">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                {% elif reply.stars == 3 %}
+                <div class="star">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                {% elif reply.stars == 4 %}
+                <div class="star">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                {% elif reply.stars == 5 %}
+                <div class="star">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <p class="mt-30 mb-4">{{ reply.message }}</p>
+        <a href="#0" class="sub-bg primary-color reply" data-comment-id="{{ reply.id }}">پاسخ</a>
+
+        {% include 'replies.html' with replies=reply.replies.all %}
+    </div>
+</div>
+{% endfor %}

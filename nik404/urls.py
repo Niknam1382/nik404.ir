@@ -25,6 +25,7 @@ urlpatterns = [
     path('blog/',include('blog.urls')),
     path('summernote/', include('django_summernote.urls')),
     path('accounts/', include('accounts.urls')),
+    path('pythonium/', include('pythonium.urls')),
 ]
     
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

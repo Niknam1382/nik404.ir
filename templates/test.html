@@ -11,6 +11,7 @@
             color: goldenrod;
             text-shadow: 10px;
         }
+
         div {
             max-width: fit-content;
             margin-left: auto;
@@ -25,6 +26,14 @@
     <div>
         <h1>Django</h1>
     </div>
+
+    {% for i in videos %}
+    <video width='400' controls>
+        <source src="{{ i.videofile.url }}" type='video/mp4'>
+        Your browser does not support the video tag.
+    </video>
+    {% endfor %}
+
 </body>
 
 </html>

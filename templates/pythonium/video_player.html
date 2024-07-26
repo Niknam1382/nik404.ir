@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ video_file.title }}</title>
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.plyr.io/3.6.8/plyr.polyfilled.js"></script>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-container {
+            margin-bottom: 20px;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .description {
+            margin-top: 20px;
+        }
+
+        .comments {
+            margin-top: 40px;
+        }
+
+        .comments h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .comments form {
+            margin-bottom: 20px;
+        }
+
+        .comments .form-group {
+            margin-bottom: 15px;
+        }
+
+        .comments .btn {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="video-container">
+            <h1 style="text-align: right;">{{ video_file.title }}</h1>
+            <video id="player" class="plyr__video-embed" controls>
+                <source src="{{ video_file.videofile.url }}" type="video/mp4" />
+                <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider upgrading to a web browser that
+                    <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                </p>
+            </video>
+        </div>
+        <div class="description">
+            <h2 style="text-align: right;">توضیحات ویدیو</h2>
+            <p style="text-align: right;">{{ video_file.discription }}</p>
+        </div>
+        <div class="comments">
+            <h2 style="text-align: right;">نظرسنجی</h2>
+            <form>
+                <div class="form-group">
+                    <!-- <label for="comment">نظر شما:</label> -->
+                    <h6 style="text-align: right;">: نظر شما</h6>
+                    <textarea class="form-control" id="comment" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="text-align: right;">ارسال</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const player = new Plyr('#player');
+        });
+    </script>
+</body>
+
+</html>

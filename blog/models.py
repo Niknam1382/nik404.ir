@@ -54,6 +54,7 @@ class Post(models.Model):
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     email = models.EmailField()
     message = models.TextField()
@@ -61,3 +62,6 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     published_at = models.DateTimeField(auto_now=True)
     stars = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)])
+
+    def __str__(self):
+        return f'Comment by {self.name} on {self.post}'

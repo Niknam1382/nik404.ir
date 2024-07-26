@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from blog.models import Post, Comment
 from django.utils import timezone
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -35,7 +35,14 @@ def blog_single(request, pid):
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
-            form.save()
+            parent_id = request.POST.get('parent_id')
+            parent_comment = None
+            if parent_id:
+                parent_comment = Comment.objects.get(id=parent_id)
+            new_comment = form.save(commit=False)
+            new_comment.post = get_object_or_404(Post, pk=pid)
+            new_comment.parent = parent_comment
+            new_comment.save()
             messages.add_message(request, messages.INFO, "کامنت شما در صف بررسی قرار گرفت")
         else:
             messages.add_message(request, messages.INFO, "کامنت شما ثبت نشد. لطفا مجدداََ تلاش بفرمائید")
@@ -44,7 +51,7 @@ def blog_single(request, pid):
     post = get_object_or_404(posts, pk=pid)
     post.counted_views += 1
     post.save()
-    comments = Comment.objects.filter(approved=True, post=post.id).order_by('created_at')
+    comments = Comment.objects.filter(approved=True, post=post.id, parent=None).order_by('created_at')
     comments_counter = comments.count()
     post.comment_counter = comments_counter
     post.save()
