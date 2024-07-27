@@ -273,66 +273,6 @@
                                 });
                             });
                         </script>
-
-
-
-                        <!-- <div class="contact__form mt-60">
-                            <h3 class="fw-700 mb-40">نظر بدهید</h3>
-                            <form action="{% url 'blog:single' pid=post.id %}" method="post">
-                                {% csrf_token %}
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="name">نام شما*</label>
-                                        <input id="name" name="name" class="bg-transparent bor" type="text" placeholder="اسم شما">
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="email">ایمیل شما*</label>
-                                        <input class="bg-transparent bor" id="email" name='email' type="email" placeholder="ایمیل شما">
-                                    </div>
-                                </div>
-                                <div class="text-area">
-                                    <label for="massage">نوشتن پیام*</label>
-                                    <textarea class="bg-transparent bor" id="massage" name="message" placeholder="پیام بنویس"></textarea>
-                                </div>
-                                <div class="btn-two">
-                                    <span class="btn-circle"></span>
-                                    <input type="hidden" name="post" value="{{post.id}}">
-                                    <input type="hidden" name="parent_id" id="parent_id" value="">
-                                    <label for="score">امتیاز (از 1 تا 5):</label>
-                                    <input type="number" id="score" name="stars" min="1" max="5">
-                                    <button type="submit" class="btn-one"> ارسال نظر </button>
-                                </div>
-                            </form>
-                        </div>
-                        
-                        <div class="comments">
-                            {% for comment in comments %}
-                                <div class="comment">
-                                    <p><strong>{{ comment.name }}</strong> گفت:</p>
-                                    <p>{{ comment.message }}</p>
-                                    <a href="#" class="reply" data-comment-id="{{ comment.id }}">پاسخ</a>
-                                    {% for reply in comment.replies.all %}
-                                        <div class="reply-comment">
-                                            <p><strong>{{ reply.name }}</strong> در پاسخ گفت:</p>
-                                            <p>{{ reply.message }}</p>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            {% endfor %}
-                        </div>
-                        
-                        <script>
-                            document.querySelectorAll('.reply').forEach(function(element) {
-                                element.addEventListener('click', function(event) {
-                                    event.preventDefault();
-                                    var commentId = this.getAttribute('data-comment-id');
-                                    document.getElementById('parent_id').value = commentId;
-                                    document.getElementById('massage').focus();
-                                });
-                            });
-                        </script> -->
-
-
                     </div>
                 </div>
                 <div class="col-lg-4 order-1 order-lg-2">

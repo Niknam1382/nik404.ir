@@ -47,26 +47,7 @@
 <!-- Fullscreen search area end here -->
 
 <main>
-    <!-- Page banner area start here -->
-    <section class="banner__inner-page bg-image pt-180 pb-180 bg-image"
-        data-background="{% static 'images/banner/banner-inner-page.jpg' %}">
-        <div class="shape2 wow slideInLeft" data-wow-delay="00ms" data-wow-duration="1500ms">
-            <img src="{% static 'images/banner/inner-banner-shape2.png' %}" alt="shape">
-        </div>
-        <div class="shape1 wow slideInLeft" data-wow-delay="200ms" data-wow-duration="1500ms">
-            <img src="{% static 'images/banner/inner-banner-shape1.png' %}" alt="shape">
-        </div>
-        <div class="shape3 wow slideInRight" data-wow-delay="200ms" data-wow-duration="1500ms">
-            <img class="sway__animationX" src="{% static 'images/banner/inner-banner-shape3.png' %}" alt="shape">
-        </div>
-        <div class="container">
-            <h2 class="wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms"> شبکه وبلاگ</h2>
-            <div class="breadcrumb-list wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1500ms">
-                <a href="index.html">صفحه اصلی</a><span><i class="fa-regular fa-angles-right mx-2"></i> شبکه
-                    وبلاگ</span>
-            </div>
-        </div>
-    </section>
+
     <!-- Page banner area end here -->
 
     <!-- Blog area start here -->
@@ -79,7 +60,7 @@
                     <source src="{{ i.videofile.url }}" type='video/mp4'>
                     Your browser does not support the video tag.
                 </video> -->
-                
+
                 <div class="col-xl-4 col-lg-6 col-md-6 wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1500ms">
                     <div class="blog__item">
                         <a href="{% url 'pythonium:single' vid=i.id %}" class="blog__image d-block image">
@@ -129,7 +110,8 @@
                                     <a href="#0">0 نظر</a>
                                 </li>
                             </ul>
-                            <h3><a href="{% url 'pythonium:single' vid=i.id %}" class="primary-hover">{{i.title}}</a></h3>
+                            <h3><a href="{% url 'pythonium:single' vid=i.id %}" class="primary-hover">{{i.title}}</a>
+                            </h3>
                             <a class="mt-25 read-more-btn" href="{% url 'pythonium:single' vid=i.id %}">بیشتر بخوانید <i
                                     class="fa-regular fa-arrow-right-long"></i></a>
                         </div>
@@ -139,10 +121,19 @@
 
             </div>
             <div class="pegi justify-content-center mt-60">
-                <a href="#0" class="active">01</a>
-                <a href="#0">02</a>
-                <a href="#0">03</a>
-                <a href="#0"><i class="fa-solid fa-arrow-right-long primary-color transition"></i></a>
+                {% if videos.has_previous %}
+                <a href="?page={{ videos.previous_page_number }}"><i class="fa-solid transition">→</i></a>
+                {% endif %}
+                {% for i in videos.paginator.page_range %}
+                {% if videos.number == i %}
+                <a href="?page={{i}}" class="active">{{i}}</a>
+                {% else %}
+                <a href="?page={{i}}">{{i}}</a>
+                {% endif %}
+                {% endfor %}
+                {% if videos.has_next %}
+                <a href="?page={{ videos.next_page_number }}"><i class="fa-solid transition">←</i></a>
+                {% endif %}
             </div>
         </div>
     </section>

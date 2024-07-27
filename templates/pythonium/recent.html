@@ -1,8 +1,8 @@
 {% load static %}
 <div class="item sub-bg mb-30">
-    <h5 class="title">پست های اخیر</h5>
+    <h5 class="title">ویدئو های اخیر</h5>
     <ul class="single-post">
-        {% for i in posts %}
+        {% for i in videos %}
         <li>
             <img src="{{i.image.url}}" alt="i.title" width="100" height="80">
             <div class="con">
@@ -16,7 +16,7 @@
                             fill="#3C72FC" />
                     </svg>
                     {{ i.shamsi_publish_date }}</span>
-                <h5 class="mt-2"><a href="{% url 'blog:single' pid=post.id %}" class="primary-hover">{{i.title}}</a></h5>
+                <h5 class="mt-2"><a href="{% url 'pythonium:single' vid=i.id %}" class="primary-hover">{{i.title}}</a></h5>
             </div>
         </li>
         {% endfor %}

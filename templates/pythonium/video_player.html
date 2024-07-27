@@ -63,6 +63,24 @@
 </head>
 
 <body>
+    <div style="text-align: center; font-size: larger;">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                {{ message }}
+                </li>
+                {% endfor %}
+        </ul>
+        <script>
+            // پس از 5 ثانیه، پیام‌ها را حذف کن
+            setTimeout(function () {
+                document.querySelector('.messages').innerHTML = '';
+            }, 5000);
+        </script>
+        {% endif %}
+    </div>
     <div class="container">
         <div class="video-container">
             <h1 style="text-align: right;">{{ video_file.title }}</h1>
@@ -80,11 +98,13 @@
         </div>
         <div class="comments">
             <h2 style="text-align: right;">نظرسنجی</h2>
-            <form>
+            <form action="{% url 'pythonium:video_player' video_file.id %}" method="post">
+                {% csrf_token %}
                 <div class="form-group">
                     <!-- <label for="comment">نظر شما:</label> -->
                     <h6 style="text-align: right;">: نظر شما</h6>
-                    <textarea class="form-control" id="comment" rows="3"></textarea>
+                    <!-- <textarea class="form-control" id="comment" rows="3"></textarea> -->
+                    <input type="text" class="form-control" id="comment" rows="5" name="message">
                 </div>
                 <button type="submit" class="btn btn-primary" style="text-align: right;">ارسال</button>
             </form>

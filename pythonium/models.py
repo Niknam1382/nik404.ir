@@ -30,7 +30,7 @@ class Category(models.Model):
 
 class VideoFile(models.Model):
     videofile = models.FileField(upload_to='deploy/videos/%Y/%m/%d/', null=True, verbose_name="")
-    slug = models.SlugField(unique=True)
+    # slug = models.SlugField(unique=True)
     title= models.CharField(max_length=500)
     discription = models.TextField()
     season = models.IntegerField(null=True, blank=True)
@@ -41,7 +41,7 @@ class VideoFile(models.Model):
     status = models.BooleanField(default=False)
     
 class Video(models.Model):
-    slug = models.SlugField(unique=True)
+    # slug = models.SlugField(unique=True)
     title= models.CharField(max_length=500)
     discription = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
@@ -75,6 +75,7 @@ class Video(models.Model):
     
 class Comment(models.Model):
     Video = models.ForeignKey(Video, on_delete=models.CASCADE)
+    parent = models.ForeignKey('self', null=True, blank=True, related_name='replies', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     email = models.EmailField()
     message = models.TextField()
@@ -82,3 +83,7 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     published_at = models.DateTimeField(auto_now=True)
     stars = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)])
+
+class python_comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField()
