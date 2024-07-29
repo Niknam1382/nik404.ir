@@ -11,6 +11,7 @@ def blog_view(request, **kwargs):
     now = timezone.now()
     posts = Post.objects.filter(status=True).order_by('-published_date').exclude(published_date__gt=now)
 
+    
     if kwargs.get('cat') is not None:
         posts = posts.filter(status=True, category__name=kwargs['cat'])
     if kwargs.get('author') != None:

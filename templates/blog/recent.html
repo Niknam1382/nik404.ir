@@ -16,7 +16,7 @@
                             fill="#3C72FC" />
                     </svg>
                     {{ i.shamsi_publish_date }}</span>
-                <h5 class="mt-2"><a href="{% url 'blog:single' pid=post.id %}" class="primary-hover">{{i.title}}</a></h5>
+                <h5 class="mt-2"><a href="{% url 'blog:single' pid=i.id %}" class="primary-hover">{{i.title}}</a></h5>
             </div>
         </li>
         {% endfor %}

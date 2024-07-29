@@ -1,5 +1,5 @@
 from django.contrib import admin
-from website.models import content
+from website.models import content, w1, w2e
 # Register your models here.
 
 class contentAdmin(admin.ModelAdmin):
@@ -10,3 +10,5 @@ class contentAdmin(admin.ModelAdmin):
     list_filter = ["email"]
 
 admin.site.register(content, contentAdmin)
+admin.site.register(w1)
+admin.site.register(w2e)

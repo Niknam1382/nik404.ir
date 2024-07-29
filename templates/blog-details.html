@@ -4,50 +4,6 @@
 {% load humanize %}
 {% block content %}
 
-<!-- Sidebar area start here -->
-<div id="targetElement" class="sidebar-area sidebar__hide">
-    <div class="sidebar__overlay"></div>
-    <a href="index.html" class="logo mb-40">
-        <img src="{%static 'images/logo/logo.svg' %}" alt="logo">
-    </a>
-    <div class="sidebar__search mb-30">
-        <input type="text" placeholder="جستجو...">
-        <i class="fa-regular fa-magnifying-glass"></i>
-    </div>
-    <div class="mobile-menu overflow-hidden"></div>
-    <ul class="info pt-40">
-        <li><i class="fa-solid primary-color fa-location-dot"></i> <a href="#0">example@example.com</a>
-        </li>
-        <li class="py-2"><i class="fa-solid primary-color fa-phone-volume"></i> <a
-                href="tel:+208-6666-0112">+208-6666-0112</a>
-        </li>
-        <li><i class="fa-solid primary-color fa-paper-plane"></i> <a href="#0">info@example.com</a></li>
-    </ul>
-    <div class="social-icon mt-20">
-        <a href="#0"><i class="fa-brands fa-facebook-f"></i></a>
-        <a href="#0"><i class="fa-brands fa-twitter"></i></a>
-        <a href="#0"><i class="fa-brands fa-linkedin-in"></i></a>
-        <a href="#0"><i class="fa-brands fa-youtube"></i></a>
-    </div>
-    <button id="closeButton" class="text-white"><i class="fa-solid fa-xmark"></i></button>
-</div>
-<!-- Sidebar area end here -->
-
-<!-- Fullscreen search area start here -->
-<div class="search-wrap">
-    <div class="search-inner">
-        <i class="fas fa-times search-close" id="search-close"></i>
-        <div class="search-cell">
-            <form method="get">
-                <div class="search-field-holder">
-                    <input type="جستجو" class="main-search-input" placeholder="جستجو...">
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- Fullscreen search area end here -->
-
 <main>
     <!-- Page banner area start here -->
     <section class="banner__inner-page bg-image pt-180 pb-180 bg-image"
@@ -168,8 +124,8 @@
                         </div>
                     </div>
                     <div class="blog-single__review mt-60">
-                        {% if comments_counter != 0 %}
-                        <h3>{{comments_counter}} بررسی، برای {{post.title}}</h3>
+                        {% if comments|length != 0 %}
+                        <h3>{{comments|length}} بررسی، برای {{post.title}}</h3>
                         {% else %}
                         <h3>بررسی برای {{post.title}} وجود ندارد.</h3>
                         <h5>اولین نظر را شما ثبت کنید !</h5>

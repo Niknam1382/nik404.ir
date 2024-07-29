@@ -57,6 +57,9 @@ class Video(models.Model):
     tags = TaggableManager()
     comment_counter = models.IntegerField(default=0)
 
+    price = models.IntegerField(null=True, blank=True)
+    price_off = models.IntegerField(null=True, blank=True)
+
     def shamsi_publish_date(self):
            return date.fromgregorian(date=self.published_date)
     
@@ -82,7 +85,7 @@ class Comment(models.Model):
     approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     published_at = models.DateTimeField(auto_now=True)
-    stars = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)])
+    stars = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)], null=True, blank=True)
 
 class python_comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
