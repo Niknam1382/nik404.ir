@@ -9,6 +9,6 @@ urlpatterns = [
     path('search/', pythonium_search, name='search'),
     path('video/<int:video_id>/', video_player, name='video_player'),
     path('<str:cat>', pythonium_view, name='category'),
-    path('author/<str:author>', pythonium_view, name='author'),
+    # path('author/<str:author>', pythonium_view, name='author'),
     path('tag/<str:tag_name>', pythonium_view, name='tag' )
 ]

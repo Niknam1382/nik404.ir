@@ -59,6 +59,7 @@ class Video(models.Model):
 
     price = models.IntegerField(null=True, blank=True)
     price_off = models.IntegerField(null=True, blank=True)
+    is_product = models.BooleanField(default=0)
 
     def shamsi_publish_date(self):
            return date.fromgregorian(date=self.published_date)

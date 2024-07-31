@@ -19,6 +19,9 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from azbankgateways.urls import az_bank_gateways_urls
+admin.autodiscover()
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('website.urls')),
@@ -26,6 +29,9 @@ urlpatterns = [
     path('summernote/', include('django_summernote.urls')),
     path('accounts/', include('accounts.urls')),
     path('pythonium/', include('pythonium.urls')),
+    path('cart/', include('cart.urls')),
+    # path("bankgateways/", az_bank_gateways_urls()),
+    path('payment/', include('payment.urls')),
 ]
     
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

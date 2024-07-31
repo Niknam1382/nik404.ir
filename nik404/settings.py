@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'django_summernote',
     'accounts',
     'pythonium',
+    'cart',
+    "azbankgateways",
+    'payment',
 ]
 
 MIDDLEWARE = [
@@ -144,3 +147,77 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'niksky404@gmail.com'
 EMAIL_HOST_PASSWORD = 'rdun lnku ahbj jvce'
+
+
+AZ_IRANIAN_BANK_GATEWAYS = {
+    "GATEWAYS": {
+        "BMI": {
+            "MERCHANT_CODE": "<YOUR MERCHANT CODE>",
+            "TERMINAL_CODE": "<YOUR TERMINAL CODE>",
+            "SECRET_KEY": "<YOUR SECRET CODE>",
+        },
+        "SEP": {
+            "MERCHANT_CODE": "<YOUR MERCHANT CODE>",
+            "TERMINAL_CODE": "<YOUR TERMINAL CODE>",
+        },
+        "ZARINPAL": {
+            "MERCHANT_CODE": "<YOUR MERCHANT CODE>",
+            "SANDBOX": 0,  # 0 disable, 1 active
+        },
+        "IDPAY": {
+            "MERCHANT_CODE": "<YOUR MERCHANT CODE>",
+            "METHOD": "POST",  # GET or POST
+            "X_SANDBOX": 0,  # 0 disable, 1 active
+        },
+        "ZIBAL": {
+            "MERCHANT_CODE": "<YOUR MERCHANT CODE>",
+        },
+        "BAHAMTA": {
+            "MERCHANT_CODE": "<YOUR MERCHANT CODE>",
+        },
+        "MELLAT": {
+            "TERMINAL_CODE": "<YOUR TERMINAL CODE>",
+            "USERNAME": "<YOUR USERNAME>",
+            "PASSWORD": "<YOUR PASSWORD>",
+        },
+        "PAYV1": {
+            "MERCHANT_CODE": "<YOUR MERCHANT CODE>",
+            "X_SANDBOX": 0,  # 0 disable, 1 active
+        },
+    },
+    "IS_SAMPLE_FORM_ENABLE": True,  # اختیاری و پیش فرض غیر فعال است
+    # یو آر ال های مربوط به تست درگاه بانک را فعال و یا غیر فعال می کند. در صورت فعال بودن می توانید از طریق آدرس زیر درگاه پرداخت را امتحان کنید.
+    "DEFAULT": "BMI",
+    "CURRENCY": "IRR",  # اختیاری   # واحد پولی
+    "TRACKING_CODE_QUERY_PARAM": "tc",  # اختیاری
+    # : پارامتری که در هنگام بازگشت از درگاه به کال بک یو آر ال تعیین شده تنظیم و ارسال می گردد. به عنوان مثال زمانی که از کاربر از درگاه بانک باز می گردد چه پرداخت موفق داشته باشد و چه نا موفق کاربر به لینکی که در هنگام استفاده از درگاه تنظیم شده است٬ ارجاع داده می شود و در انتهای آن این رشته + کد پیگیری بازگردانده می شود تا بتوان داده ها را از این طریق بازیابی کرد.
+    "TRACKING_CODE_LENGTH": 16,  # اختیاری  # طول کد پیگیری تولید شده توسط سیستم است. دقت شود که در برخی درگاه ها مانند درگاه بانک ملی ایران، طول ۲۰ کاراکتر خطای شماره سفارش ارسال نشده است را می دهد.
+    "SETTING_VALUE_READER_CLASS": "azbankgateways.readers.DefaultReader",  # اختیاری    # با مقدار دهی به این تنظیم شما می توانید حالت یک متغیر خوان اضافه کنید که قابلیت های دیگری مثل پروایدر و پشتیبانی از یک بانک با چند اکانت و ... را به آن اضافه کنید.
+    "BANK_PRIORITIES": [ # این آرایه اختیاری است. زمانی که وضعیت اتصال به درگاه به صورت خودکار تعیین شده باشد، ابتدا به بانک پیش فرض متصل می شود و سپس بر این اساس شروع به اتصال خواهد کرد، تا به اولین درگاه فعال برسد. در حالت پیش فرض این آرایه خالی است که بعد از اتصال به درگاه مورد نظر در صورت خطا بقیه درگاه ها امتحان نخواهند شد.
+        "BMI",
+        "SEP",
+        # and so on ...
+    ],  # اختیاری
+    "IS_SAFE_GET_GATEWAY_PAYMENT": True,  # اختیاری، بهتر است True بزارید.
+    "CUSTOM_APP": 'payment',  # اختیاری
+}
+
+# CALLBACK_NAMESPACE: اگر میخواهید تابع کال بک داخلی را اوررایت کنید یا پروژه دارای اپ های مختلفی است و قسمت پرداخت در اپ جداگانه ای قرار دارد میتوانید محل قرار گیری یو آر ال های پیشفرض را تغییر دهید برای مثال:
+# 'CALLBACK_NAMESPACE': 'api:payment:callback',
+
+# SAMPLE_RESULT_NAMESPACE: اگر میخواهید صفحه نمونه داخلی را اوررایت کنید یا پروژه دارای اپ های مختلفی است وقسمت پرداخت در اپ جداگانه ای قرار دارد میتوانید محل قرار گیری یو آر ال های پیشفرض را تغییر دهید برای مثال:
+
+# 'SAMPLE_RESULT_NAMESPACE': 'api:payment:sample-result',
+# 'IS_SAFE_GET_GATEWAY_PAYMENT':
+
+# 'IS_SAFE_GET_GATEWAY_PAYMENT': True,
+# توصیه میشه True باشه.
+
+# درصورتی که مقدار برابر با True قرار بگیرد تابع redirect_gateway از دسترس خارج میشودو باید از تابع get_gateway استفاده شود.
+
+# CUSTOM_APP :
+
+# CUSTOM_APP : 'api:payment',
+# اگر نیاز ندارید توابع داخلی را اوررایت کنیدو فقط به این نیاز دارید که مسیر یو ار ال های داخلی را در اپ جداگانه ای قرارگیرد میتوانید از این گزینه برای ادرسی دهی محل قرار گیری اپ استفاده کنید
+
+SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'

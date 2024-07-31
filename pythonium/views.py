@@ -17,8 +17,8 @@ def pythonium_view(request, **kwargs):
     videos = Video.objects.filter(status=True).order_by('-published_date').exclude(published_date__gt=now)
     if kwargs.get('cat') is not None:
         videos = videos.filter(status=True, category__name=kwargs['cat'])
-    if kwargs.get('author') != None:
-        videos = videos.filter(status=True, author__username=kwargs['author'])
+    # if kwargs.get('author') != None:
+    #     videos = videos.filter(status=True, author__username=kwargs['author'])
     if kwargs.get('tag_name') :
         videos = videos.filter(tags__name__in=[kwargs['tag_name']])
     videos = Paginator(videos, 9)

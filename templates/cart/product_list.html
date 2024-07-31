@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>محصولات</title>
+</head>
+<body>
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags %}
+    <script>alert("{{ message }}")</script> {% endif %}
+
+    {% endfor %}
+
+    {% endif %}
+    <h1>محصولات</h1>
+    <ul>
+        {% for product in products %}
+            <li>
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <h2>{{ product.name }}</h2>
+                <p>{{ product.description }}</p>
+                <p>{{ product.price }} تومان</p>
+                <a href="{% url 'cart:add_to_cart' product.id %}">اضافه به سبد خرید</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'cart:cart_detail' %}">مشاهده سبد خرید</a>
+</body>
+</html>
