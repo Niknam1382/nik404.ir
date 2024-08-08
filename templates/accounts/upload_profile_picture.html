@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{request.user.username}}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="file"],
+        input[type="text"],
+        button {
+            display: block;
+            width: 94%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        img {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-top: 20px;
+            border: 3px double green;
+            border-radius: None;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- profile_upload_form.html -->
+    <div style="text-align: center;"><img src="{{ request.user.profile.image.url }}" alt="Profile Picture"></div>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}<h3 style="display: block; text-align: center; font-family: Georgia, 'Times New Roman', Times, serif;">آپلود یا آپدیت عکس پروفایل</h3>
+        <input type="hidden" value="{{ request.user }}" name="user">
+        <!-- {{ form.as_p }} -->
+        
+        <input type="file" name="image" placeholder="عکس پروفایل" style="text-align: center;" aria-required="true">
+        <input type="text" name="phone" placeholder="شماره موبایل" aria-required="true">
+        <button type="submit">اعمال تغییرات</button>
+    </form>
+</body>
+
+</html>

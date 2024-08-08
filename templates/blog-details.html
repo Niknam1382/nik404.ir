@@ -92,10 +92,7 @@
                             <h3 class="blog-single__title mt-20">{{post.title}}</h3>
                             <p class="mb-20 mt-20">{{post.content|safe}}</p>
                             <div class="hilight-text mt-40 mb-30 sub-bg">
-                                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                    گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای
-                                    شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می
-                                    باشد</p>
+                                <p>{{post.content2|safe}}</p>
                                 <svg width="36" height="26" viewBox="0 0 36 26" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -164,10 +161,12 @@
                         </div>
 
                         <div class="comments">
+                            
                             {% for i in comments %}
                             <div class="blog-single__comment d-flex gap-4 mt-60 pb-60 bor-bottom">
                                 <div class="image">
-                                    <img src="{% static 'images/blog/comment-image1.png' %}" alt="image">
+                                    <!-- <img src="{% static 'images/blog/comment-image1.png' %}" alt="image"> -->
+                                    <img src="{{ request.user.profile.image.url }}" alt="Profile Picture" style="border: 3px dotted gold; max-height: 100px ; max-width: 100px; border-radius: 50%;">
                                 </div>
                                 <div class="content">
                                     <div class="head d-flex flex-wrap gap-2 align-items-center justify-content-between">

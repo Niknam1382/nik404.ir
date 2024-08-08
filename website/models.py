@@ -28,10 +28,10 @@ class contact(models.Model):
         ordering = ["-created_date"]
 
 class w1(models.Model):
-    title = models.CharField(max_length=255)
-    subject = models.CharField(max_length=255)
-    content = models.TextField()
-    created_date = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=255, default='default')
+    subject = models.CharField(max_length=255, default='default')
+    content = models.TextField(default='default')
+    created_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
         return '{} - {}'.format(self.title, self.subject)
@@ -40,10 +40,10 @@ class w1(models.Model):
         ordering = ["-created_date"]
 
 class w2e(models.Model):
-    title = models.CharField(max_length=255)
-    subject = models.CharField(max_length=255)
-    content = models.TextField()
-    created_date = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=255, default='default')
+    subject = models.CharField(max_length=255, default='default')
+    content = models.TextField(default='default', null=True, blank=True)
+    created_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
         return '{} - {}'.format(self.title, self.subject)

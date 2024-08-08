@@ -71,16 +71,41 @@
                             </div>
                         </a>
                         <div class="blog__content">
-                            
-                            <h3><a href="{% url 'pythonium:single' vid=i.id %}" class="primary-hover">{{i.title}}</a>
+
+                            <h3 style="display: inline;"><a style="display: inline;"
+                                    href="{% url 'pythonium:single' vid=i.id %}" class="primary-hover">{{i.title}}</a>
                                 {% if i.price %}
                                 {% if i.price_off %}
-                                <h5 style="border: 2px solid black; padding: 4px; margin: 4px; display: inline; text-decoration: line-through; color: brown;">{{i.price}} ريال</h5>
-                                <h5 style="border: 2px solid black; padding: 4px; margin: 4px; display: inline; color: green;">{{i.price_off}} ريال</h5>
+                                <h5
+                                    style="border: 2px solid black; padding: 4px; margin: 4px; display: inline; text-decoration: line-through; color: brown;">
+                                    {{i.price}} ريال</h5>
+                                <h5
+                                    style="border: 2px solid black; padding: 4px; margin: 4px; display: inline; color: green;">
+                                    {{i.price_off}} ريال</h5>
                                 {% else %}
-                                <h5 style="border: 2px solid black; padding: 4px; margin: 4px; display: inline; text-decoration: line-through;">{{i.price}} ريال</h5>
+                                <h5 style="border: 2px solid black; padding: 4px; margin: 4px; display: inline;">
+                                    {{i.price}} ريال</h5>
                                 {% endif %}
-                                <a href="{% url 'cart:add_to_cart' i.id %}">اضافه به سبد خرید</a>
+                                <hr>
+
+                                <a href="{% url 'cart:add_to_cart' i.id %}" style="padding-top: 10px;">اضافه به سبد
+                                    خرید</a>
+                                {% else %}
+                                <h5 style="border: 2px solid black; padding: 4px; margin: 4px; display: inline;">رایگان
+                                </h5>
+                                {% if user.is_authenticated %}
+                                {% if i not in user.profile.videos.all %}
+                                <form action="{% url 'accounts:active' %}" style="display: inline;" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="id" value="{{ i.id }}">
+                                    <hr>
+                                    <button type="submit" style="padding-top: 10px;">فعالسازی رایگان دوره</button>
+                                </form>
+                                {% else %}
+                                <hr style="padding-bottom: 10px;">
+                                <p style="display: inline; color: green;">ویدیو دوره برای شما فعال است</p>
+                                {% endif %}
+                                {% endif %}
                                 {% endif %}
                                 <br>
                             </h3>

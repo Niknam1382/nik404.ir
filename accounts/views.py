@@ -10,8 +10,9 @@ from django.conf import settings
 from datetime import datetime
 import random
 from django.contrib.auth.models import User
-# from accounts.models import CustomUser
 # Create your views here.
+from accounts.forms import ProfilePictureForm
+from accounts.models import profile
 
 def login_view(request):
     if request.method == 'POST':
@@ -174,3 +175,86 @@ def reset_password_view(request):
             messages.add_message(request, messages.WARNING, f"کد تایید صحیح نمیباشد")
             return redirect('/accounts/reset')
     return render(request, 'accounts/reset2.html')
+
+
+@login_required
+def upload_profile_picture(request):
+    try:
+        user = profile.objects.get(user=request.user)
+        if request.method == 'POST':
+            form = ProfilePictureForm(request.POST, request.FILES)
+            if form.is_valid():
+                image =  form.cleaned_data["image"]            
+                user.image = image
+                phone =  form.cleaned_data["phone"]            
+                user.phone = phone
+                x = user.image
+                user.save()
+                return redirect('/')
+        else:
+            form = ProfilePictureForm()
+        x = user.image
+        user = User.objects.get_or_create(username=request.user)
+    except:
+        user = profile.objects.create(user=request.user)
+        if request.method == 'POST':
+            form = ProfilePictureForm(request.POST, request.FILES)
+            if form.is_valid():
+                image =  form.cleaned_data["image"]            
+                user.phone = phone
+                phone =  form.cleaned_data["phone"]            
+                user.image = image
+                x = user.image
+                user.save()
+                return redirect('/')
+        else:
+            form = ProfilePictureForm()
+        x = user.image
+        print(x)
+    user = User.objects.get(username=request.user)
+    return render(request, 'accounts/upload_profile_picture.html')
+
+def profile_view(request):
+    try:
+        user = profile.objects.get(user=request.user)
+        if request.method == 'POST':
+            form = ProfilePictureForm(request.POST, request.FILES)
+            if form.is_valid():
+                image =  form.cleaned_data["image"]            
+                user.image = image
+                x = user.image
+                user.save()
+                return redirect('/')
+        else:
+            form = ProfilePictureForm()
+        x = user.image
+        user = User.objects.get_or_create(username=request.user)
+    except:
+        user = profile.objects.create(user=request.user)
+        if request.method == 'POST':
+            form = ProfilePictureForm(request.POST, request.FILES)
+            if form.is_valid():
+                image =  form.cleaned_data["image"]            
+                user.image = image
+                x = user.image
+                user.save()
+                return redirect('/')
+        else:
+            form = ProfilePictureForm()
+        x = user.image
+        print(x)
+    user = User.objects.get(username=request.user)
+    return render(request, 'profile/profile.html', {'user': user, 'form': form, 'image': x})
+
+
+from pythonium.models import Video
+@login_required(login_url='/accounts/login')
+def active_item(request):
+    if request.method == 'POST':
+        item_id = int(request.POST.get('id'))
+        video = Video.objects.get(id=item_id)
+        user = request.user
+        prof = profile.objects.get_or_create(user=user)[0]
+        print(prof)
+        prof.videos.add(video)
+    return redirect('/pythonium')

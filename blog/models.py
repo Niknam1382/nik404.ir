@@ -28,6 +28,7 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
+    content2 = models.TextField(null=True, blank=True)
     image = models.ImageField(default='images/default.jpg')
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)

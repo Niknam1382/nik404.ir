@@ -1,120 +1,96 @@
-<!DOCTYPE html>
-<html lang="fa">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سبد خرید</title>
+    <title>Document</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
-        header h1 {
-            margin: 0;
-        }
-        .product-list, .cart {
+        /* Add CSS styles for flex container and items */
+        .product-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 20px;
+            justify-content: space-between;
+            list-style: none;
+            padding: 0;
         }
-        .product, .cart-item {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 20px;
-            width: calc(33.333% - 20px);
-            box-sizing: border-box;
+
+        .product-item {
+            flex: 1;
+            margin: 10px;
+            border: 1px solid #3498DB; /* Updated border color */
+            padding: 10px;
+            text-align: center;
+            background-color: #F9F9F9; /* Light gray background */
         }
-        .product img, .cart-item img {
-            max-width: 100%;
-            height: auto;
-        }
-        .product h2, .cart-item h2 {
-            font-size: 18px;
-            margin: 10px 0;
-        }
-        .product p, .cart-item p {
-            font-size: 14px;
-            margin: 10px 0;
-        }
-        .product button, .cart-item button {
-            background-color: #28a745;
+
+        /* Style the "Buy Now" button */
+        .buy-now-button {
+            display: block;
+            margin-top: 10px;
+            background-color: #FF5733; /* Bright orange button */
             color: #fff;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
         }
-        .cart-item button {
-            background-color: #dc3545;
+
+        /* Set font for product titles */
+        .product-title {
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            font-weight: bold;
         }
-        .cart-summary {
-            text-align: right;
+
+        /* Adjust font size for total price */
+        .total-price {
             font-size: 18px;
-            margin: 20px 0;
+            font-weight: bold;
         }
-        @media (max-width: 768px) {
-            .product, .cart-item {
-                width: calc(50% - 20px);
-            }
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1em;
         }
-        @media (max-width: 480px) {
-            .product, .cart-item {
-                width: 100%;
-            }
+        .a{
+            border: 2px solid black;
+            border-radius: 2px;
+            text-decoration: none;
+            transition-duration: 200ms;
+            padding: .5em;
+            color: black;
+        }
+        .a:hover{
+            border: 2px solid black;
+            border-radius: 2px;
+            text-decoration: none;
+            background-color: rgba(0, 128, 0, 0.1);
+            transition-duration: 200ms;
+            padding: .5em;
+            color: black;
+        }
+        .title{
+            color: rgb(0, 0, 50);
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>سبد خرید</h1>
-    </header>
-    {% if messages %}
-    {% for message in messages %}
-    {% if message.tags %}
-    <script>alert("{{ message }}")</script> {% endif %}
-
-    {% endfor %}
-
-    {% endif %}
-    <div class="container">
-        <div class="product-list">
-
-
-            {% for item in cart.cartitem_set.all %}
-            <div class="product" data-id="1">
-                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
-                <!-- <p>تعداد: {{ item.quantity }}</p> -->
-                {% if item.product.price_off %}
-                <p>قیمت: {{ item.product.price_off }} تومان</p>
-                {% else %}
-                <p>قیمت: {{ item.product.price }} تومان</p>
-                {% endif %}
-                <a href="{% url 'cart:remove_from_cart' item.id %}">حذف</a>
-            </div>
-            {% endfor %}
-
-            
-
+    <h1 class="title">سبد خرید فروشگاه پایتونیوم</h1>
+    <div class="product-list">
+        {% for item in cart_items %}
+        <div class="product-item">
+            <img src="{{ item.product.image.url }}" alt="" width="150em">
+            <p class="product-title">{{ item.product.title }}</p>
+            <p>قیمت : {{ item.final_price }} تومان</p>
+            <a class="buy-now-button" href="{% url 'cart:remove_from_cart' item.id %}">حذف از سبد</a>
         </div>
-        <div class="cart" style="direction: rtl; ">
-            <div class="cart-summary" style="border: 1px dotted black; border-radius: 5px; padding: 5px; margin: 5px; display: inline;">تعداد آیتم‌ها: <span id="cart-count">{{c}}</span></div>
-            <div id="cart-items"></div>
-            
-        </div><a href="#" style="text-align: center;">برای نهایی کردن سبد خرید این کلید رو ساختم وگرنه کاربرد دیگه ای نداره</a>
+        {% empty %}
+        <p>سبد خرید شما خالی است</p>
+        {% endfor %}
     </div>
-
+    {% if total_price %}
+    <p class="total-price">قیمت کل : {{ total_price }} تومان</p>
+    {% endif %}
+    <a class="a" href="#">تایید نهایی و پرداخت</a>
 </body>
 </html>

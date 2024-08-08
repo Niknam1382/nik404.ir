@@ -4,6 +4,8 @@ from django.utils import timezone
 from pythonium.forms import CommentForm
 from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.contrib.auth.models import User
+from django.http import HttpResponse
 
 # Create your views here.
 # def pythonium_view(request):
@@ -62,6 +64,7 @@ def pythonium_single(request, vid):
         videos_in_season = video.video.filter(season=season)
         season_videos[season] = videos_in_season
     '''
+    
     context = {'videos': videos, 'season_videos': season_videos, 'video': video, 'comments_counter': comments_counter, 'comments': comments}
     return render(request, 'pythonium/pythonium-single.html', context)
 
@@ -83,3 +86,9 @@ def video_player(request, video_id):
     video_file = get_object_or_404(VideoFile, id=video_id)
     context = {'video_file': video_file}
     return render(request, 'pythonium/video_player.html', context)
+
+def active_view(request, wid):
+    user = User.objects.get(username=request.user.username)
+    print(user)
+    print(wid)
+    return HttpResponse('no')
