@@ -18,6 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.sitemaps.views import sitemap
+from website.sitemaps import StaticViewSitemap
+from blog.sitemaps import BlogSitemap
+from pythonium.sitemaps import PythoniumSitemap
 
 from azbankgateways.urls import az_bank_gateways_urls
 admin.autodiscover()
@@ -29,7 +33,21 @@ handler500 = 'website.views.error_500'
 # Custom 403 error view
 handler403 = 'website.views.error_403'
 
+sitemaps = {
+    "static": StaticViewSitemap,
+    "blog": BlogSitemap,
+    "pythonium" : PythoniumSitemap
+}
+
 urlpatterns = [
+    path(
+    "sitemap.xml",
+    sitemap,
+    {"sitemaps": sitemaps},
+    name="django.contrib.sitemaps.views.sitemap",
+    ),
+    path('robots.txt', include('robots.urls')),
+    path('captcha/', include('captcha.urls')),
     path('admin/', admin.site.urls),
     path('',include('website.urls')),
     path('blog/',include('blog.urls')),

@@ -48,6 +48,10 @@ INSTALLED_APPS = [
     'cart',
     "azbankgateways",
     'payment',
+    "django.contrib.sites",
+    "django.contrib.sitemaps",
+    "robots",
+    "captcha",
 ]
 
 MIDDLEWARE = [
@@ -221,3 +225,8 @@ AZ_IRANIAN_BANK_GATEWAYS = {
 # اگر نیاز ندارید توابع داخلی را اوررایت کنیدو فقط به این نیاز دارید که مسیر یو ار ال های داخلی را در اپ جداگانه ای قرارگیرد میتوانید از این گزینه برای ادرسی دهی محل قرار گیری اپ استفاده کنید
 
 SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
+
+SITE_ID = 2
+
+ROBOTS_USE_HOST = False
+ROBOTS_USE_SITEMAP = True
