@@ -93,6 +93,9 @@
                                 {% else %}
                                 <h5 style="border: 2px solid black; padding: 4px; margin: 4px; display: inline;">رایگان
                                 </h5>
+                                {% if not requests.user.is_authenticated %}
+                                <hr><p style="padding-top: 10px; color: rgba(240, 248, 255, 0);">You are SMART! :)</p>
+                                {% endif %}
                                 {% if user.is_authenticated %}
                                 {% if i not in user.profile.videos.all %}
                                 <form action="{% url 'accounts:active' %}" style="display: inline;" method="post">
@@ -106,6 +109,9 @@
                                 <p style="display: inline; color: green;">ویدیو دوره برای شما فعال است</p>
                                 {% endif %}
                                 {% endif %}
+                                {% endif %}
+                                {% if not requests.user.is_authenticated %}
+                                <a href="{% url 'accounts:login' %}" style="display: block; padding-top: 10px;">ابتدا وارد شوید</a>
                                 {% endif %}
                                 <br>
                             </h3>
