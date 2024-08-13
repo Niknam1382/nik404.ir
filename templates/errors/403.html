@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>400 forbidden</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff6f61, #de4463, #6b6b83);
+            overflow: hidden;
+            color: #fff;
+            text-align: center;
+        }
+
+        .container {
+            z-index: 2;
+            position: relative;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .error-title {
+            font-size: 9rem;
+            margin: 0;
+            color: #ffd700;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        .error-message {
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+
+        .home-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #ff6f61;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 111, 97, 0.4);
+        }
+
+        .home-button:hover {
+            background-color: #de4463;
+        }
+
+        .site-name {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #ccc;
+            opacity: 0.8;
+        }
+
+        .animation-box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .floating-object {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #ffd700;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #ffd700, 0 0 15px #ffd700, 0 0 20px #ffd700, 0 0 25px #ff6f61, 0 0 40px #de4463, 0 0 50px #de4463, 0 0 70px #6b6b83, 0 0 100px #6b6b83;
+            }
+
+            to {
+                text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700, 0 0 30px #ffd700, 0 0 35px #ff6f61, 0 0 60px #de4463, 0 0 70px #de4463, 0 0 90px #6b6b83, 0 0 150px #6b6b83;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(100px, 50px);
+            }
+
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+    </style>
+    <script>
+        window.addEventListener('load', () => {
+            const floatingObject = document.querySelector('.floating-object');
+            const animationBox = document.querySelector('.animation-box');
+
+            function animateFloatingObject() {
+                const maxWidth = animationBox.clientWidth - floatingObject.clientWidth;
+                const maxHeight = animationBox.clientHeight - floatingObject.clientHeight;
+
+                const randomX = Math.floor(Math.random() * maxWidth);
+                const randomY = Math.floor(Math.random() * maxHeight);
+
+                floatingObject.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            }
+
+            setInterval(animateFloatingObject, 3000);
+        });
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="error-title">403</h1>
+        <p class="error-message">Forbidden error 403</p>
+        <a href="{% url 'website:index' %}" class="home-button">بازگشت به صفحه اصلی</a>
+        <p class="site-name">nik404.ir</p>
+        <div class="animation-box">
+            <div class="floating-object"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

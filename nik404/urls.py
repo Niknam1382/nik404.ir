@@ -36,3 +36,10 @@ urlpatterns = [
     
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Custom 404 error view
+handler404 = 'website.views.error_404' 
+# Custom 500 error view
+handler500 = 'website.views.error_500' 
+# Custom 403 error view
+handler403 = 'website.views.error_403'
